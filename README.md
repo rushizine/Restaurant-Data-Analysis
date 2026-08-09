@@ -78,8 +78,7 @@ The project provides insights into restaurant preferences, customer ratings, pri
 Restaurant-Data-Analysis/
 │
 ├── Restaurant_Data_Analysis.ipynb
-├── Dataset_adjust.csv
-├── Project_Report.pdf
+├── Dataset.csv
 └── README.md
 ```
 
@@ -87,8 +86,3 @@ Restaurant-Data-Analysis/
 
 This project provided practical experience in **data cleaning, exploratory data analysis, statistical analysis, data visualization, and business insight generation** using Python. It also strengthened my ability to work with real-world datasets and present analytical findings in a professional manner.
 
-## Internship
-
-**Cognifyz Technologies – Data Analysis Internship**
-
-**Domain:** Data Analysis
