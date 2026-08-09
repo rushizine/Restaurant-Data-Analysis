@@ -2,7 +2,8 @@
 
 ## Project Overview
 
-**Restaurant Data Analysis** is a data analysis project completed as part of the **Data Analysis Internship at Cognifyz Technologies**. The project focuses on analyzing restaurant data to identify meaningful patterns, trends, and business insights related to cuisines, locations, pricing, customer ratings, votes, and restaurant services.
+**Restaurant Data Analysis** is a **personal data analytics project** focused on analyzing restaurant data to identify meaningful patterns, trends, and business insights related to cuisines, locations, pricing, customer ratings, votes, and restaurant services. The project demonstrates practical skills in data cleaning, exploratory data analysis, data visualization, and business insight generation using Python.
+
 
 The analysis was performed using **Python** in **Jupyter Notebook**, with **Pandas** for data manipulation and **Matplotlib** and **Seaborn** for data visualization.
 
