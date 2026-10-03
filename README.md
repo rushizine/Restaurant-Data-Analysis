@@ -26,15 +26,6 @@ restaurant-data-analysis/
 └── README.md
 ```
 
-## Questions Answered
-
-| Level | Tasks |
-|---|---|
-| 1 - Basic | Top cuisines, City analysis, Price range, Online delivery |
-| 2 - Intermediate | Ratings, Cuisine combinations, Map of restaurants, Restaurant chains |
-| 3 - Advanced | Votes analysis, Price range vs delivery and table booking |
-| 3 - Advanced | Reviews - **not possible**, the data has no review text |
-
 ## Main Results
 
 | Question | Answer |
@@ -51,12 +42,6 @@ restaurant-data-analysis/
 | Table booking | 0.02% in price range 1, up to 46.8% in price range 4 |
 | Online delivery by price | Highest in price range 2 (41.3%), lowest in range 4 (9.0%) |
 
-## Charts
-
-| | |
-|---|---|
-| ![Top cuisines](images/01_top_cuisines.png) | ![Price vs services](images/10_price_vs_services.png) |
-| ![Votes vs rating](images/09_votes_vs_rating.png) | ![Map](images/07_map.png) |
 
 ## How to Run
 
