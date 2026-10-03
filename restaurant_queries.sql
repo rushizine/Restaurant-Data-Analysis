@@ -5,7 +5,7 @@
 -- =====================================================================
 
 -- ---------------------------------------------------------------------
--- STEP 1: CREATE TABLE AND LOAD DATA
+-- 1: CREATE TABLE AND LOAD DATA
 -- ---------------------------------------------------------------------
 CREATE DATABASE IF NOT EXISTS restaurant_db;
 USE restaurant_db;
@@ -34,18 +34,10 @@ CREATE TABLE restaurants (
     votes                INT
 );
 
--- Easy way: MySQL Workbench -> right click table -> Table Data Import Wizard
--- -> choose data/restaurants_clean.csv
-
 -- Check: should show 9551
 SELECT COUNT(*) AS total_restaurants FROM restaurants;
 
-
--- =====================================================================
--- LEVEL 1 - BASIC
--- =====================================================================
-
--- Task 1: Top 3 cuisines and their percentage
+-- Top 3 cuisines and their percentage
 -- (LIKE finds the cuisine name anywhere inside the cuisines text)
 -- Numbers can differ by 0.03% from Python because a few restaurants repeat a cuisine twice.
 SELECT 'North Indian' AS cuisine,
@@ -62,14 +54,14 @@ SELECT 'Fast Food', COUNT(*),
 FROM restaurants WHERE cuisines LIKE '%Fast Food%';
 
 
--- Task 2a: City with the most restaurants
+-- City with the most restaurants
 SELECT city, COUNT(*) AS restaurants
 FROM restaurants
 GROUP BY city
 ORDER BY restaurants DESC
 LIMIT 1;
 
--- Task 2b: Average rating of each city (only cities with 20+ rated restaurants)
+-- Average rating of each city (only cities with 20+ rated restaurants)
 SELECT city,
        COUNT(*) AS rated_restaurants,
        ROUND(AVG(aggregate_rating), 2) AS avg_rating
@@ -80,7 +72,7 @@ HAVING COUNT(*) >= 20
 ORDER BY avg_rating DESC;
 
 
--- Task 3: Price range - count and percentage
+-- Price range - count and percentage
 SELECT price_range,
        COUNT(*) AS restaurants,
        ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM restaurants), 2) AS percentage
@@ -89,21 +81,21 @@ GROUP BY price_range
 ORDER BY price_range;
 
 
--- Task 4a: Percentage of restaurants with online delivery
+-- Percentage of restaurants with online delivery
 SELECT has_online_delivery,
        COUNT(*) AS restaurants,
        ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM restaurants), 2) AS percentage
 FROM restaurants
 GROUP BY has_online_delivery;
 
--- Task 4b: Average rating with and without online delivery
+-- Average rating with and without online delivery
 SELECT has_online_delivery,
        ROUND(AVG(aggregate_rating), 2) AS avg_rating
 FROM restaurants
 WHERE aggregate_rating > 0
 GROUP BY has_online_delivery;
 
--- Task 4c: Same comparison inside India only (country_code = 1)
+-- Same comparison inside India only (country_code = 1)
 SELECT has_online_delivery,
        ROUND(AVG(aggregate_rating), 2) AS avg_rating
 FROM restaurants
@@ -111,11 +103,7 @@ WHERE aggregate_rating > 0 AND country_code = 1
 GROUP BY has_online_delivery;
 
 
--- =====================================================================
--- LEVEL 2 - INTERMEDIATE
--- =====================================================================
-
--- Task 1a: Rating distribution (rating ranges)
+-- Rating distribution (rating ranges)
 SELECT CASE WHEN aggregate_rating <= 2.0 THEN '0 - 2.0'
             WHEN aggregate_rating <= 2.5 THEN '2.1 - 2.5'
             WHEN aggregate_rating <= 3.0 THEN '2.6 - 3.0'
@@ -129,12 +117,12 @@ WHERE aggregate_rating > 0
 GROUP BY rating_range
 ORDER BY rating_range;
 
--- Task 1b: Average votes
+-- Average votes
 SELECT ROUND(AVG(votes), 1) AS avg_votes_all FROM restaurants;
 SELECT ROUND(AVG(votes), 1) AS avg_votes_rated FROM restaurants WHERE aggregate_rating > 0;
 
 
--- Task 2a: Most common cuisine combinations (2 or more cuisines)
+-- Most common cuisine combinations (2 or more cuisines)
 SELECT cuisines, COUNT(*) AS restaurants
 FROM restaurants
 WHERE cuisines LIKE '%,%'
@@ -142,7 +130,7 @@ GROUP BY cuisines
 ORDER BY restaurants DESC
 LIMIT 10;
 
--- Task 2b: Average rating of combinations (20+ rated restaurants)
+-- Average rating of combinations (20+ rated restaurants)
 SELECT cuisines,
        COUNT(*) AS rated_restaurants,
        ROUND(AVG(aggregate_rating), 2) AS avg_rating
@@ -154,7 +142,7 @@ ORDER BY avg_rating DESC
 LIMIT 10;
 
 
--- Task 3: Busiest localities (remove rows with wrong coordinates)
+-- Busiest localities (remove rows with wrong coordinates)
 SELECT locality, city, COUNT(*) AS restaurants
 FROM restaurants
 WHERE longitude <> 0 AND latitude <> 0
@@ -163,7 +151,7 @@ ORDER BY restaurants DESC
 LIMIT 10;
 
 
--- Task 4: Restaurant chains (same name used 5+ times)
+-- Restaurant chains (same name used 5+ times)
 SELECT restaurant_name,
        COUNT(*) AS outlets,
        ROUND(AVG(CASE WHEN aggregate_rating > 0 THEN aggregate_rating END), 2) AS avg_rating,
@@ -175,25 +163,20 @@ ORDER BY outlets DESC
 LIMIT 10;
 
 
--- =====================================================================
--- LEVEL 3 - ADVANCED
--- =====================================================================
--- Task 1 (reviews): not possible - the dataset has no review text.
-
--- Task 2a: Top 10 restaurants by votes
+-- Top 10 restaurants by votes
 SELECT restaurant_name, city, aggregate_rating, votes
 FROM restaurants
 ORDER BY votes DESC
 LIMIT 10;
 
--- Task 2b: Lowest votes (rated restaurants only; 0-vote restaurants are all unrated)
+-- Lowest votes (rated restaurants only; 0-vote restaurants are all unrated)
 SELECT restaurant_name, city, aggregate_rating, votes
 FROM restaurants
 WHERE aggregate_rating > 0
 ORDER BY votes ASC
 LIMIT 10;
 
--- Task 2c: Average rating by number of votes
+-- Average rating by number of votes
 SELECT CASE WHEN votes <= 50  THEN '1. Below 50'
             WHEN votes <= 200 THEN '2. 50-200'
             WHEN votes <= 1000 THEN '3. 200-1000'
@@ -206,7 +189,7 @@ GROUP BY votes_group
 ORDER BY votes_group;
 
 
--- Task 3: % with online delivery and table booking in each price range
+--  % with online delivery and table booking in each price range
 SELECT price_range,
        COUNT(*) AS restaurants,
        ROUND(SUM(CASE WHEN has_online_delivery = 'Yes' THEN 1 ELSE 0 END) * 100.0 / COUNT(*), 2) AS pct_online_delivery,
